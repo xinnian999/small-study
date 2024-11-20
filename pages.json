@@ -2,7 +2,7 @@
 	"pages": [{
 		"path": "pages/index/index",
 		"style": {
-			"navigationBarTitleText": "首页"
+			"navigationBarTitleText": "小学习通"
 		}
 	}, {
 		"path": "pages/index/know",
