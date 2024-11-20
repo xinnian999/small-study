@@ -1,27 +1,21 @@
 <template>
 	<uni-section title="这是什么？" type="line">
-		<uni-card :cover="cover" @click="onClick">
+		<uni-card :cover="cover">
 			<image slot='cover' style="width: 100%;" :src="dataSource[index-1].img"></image>
 			<!-- <text class="uni-body">这是一个带封面和操作栏的卡片示例，此示例展示了封面插槽和操作栏插槽的用法。</text> -->
 			<view slot="actions" class="card-actions">
-				<view class="card-actions-item" @click="actionsClick('分享')">
-					<uni-icons type="pengyouquan" size="18" color="#999"></uni-icons>
-					<text class="card-actions-item-text">分享</text>
+				<view class="card-actions-item" @click="handeleOK">
+					<icon type="success" size="40" />
 				</view>
 				<view class="card-actions-item" @click="actionsClick('点赞')">
-					<uni-icons type="heart" size="18" color="#999"></uni-icons>
-					<text class="card-actions-item-text">点赞</text>
+					<icon type="clear" size="40" />
 				</view>
-				<view class="card-actions-item" @click="actionsClick('评论')">
-					<uni-icons type="chatbubble" size="18" color="#999"></uni-icons>
-					<text class="card-actions-item-text">评论</text>
-				</view>
+
 			</view>
 		</uni-card>
 	</uni-section>
-
-	<uni-pagination v-model="index" class="pagination" :total="dataSource.length" page-size="1" prev-text="上一个"
-		next-text="下一个" />
+	<uni-pagination v-model="index" :current="index" class="pagination" :total="dataSource.length" page-size="1"
+		prev-text="上一个" next-text="下一个" />
 </template>
 
 <script setup>
@@ -41,6 +35,12 @@
 	]
 
 	const index = ref(1)
+
+	const handeleOK = () => {
+		if (index.value < dataSource.length) {
+			index.value++
+		}
+	}
 </script>
 
 <style lang="scss">
@@ -71,11 +71,17 @@
 
 	.card-actions {
 		display: flex;
+
+		uni-icon {
+			display: flex;
+			align-items: center;
+		}
+
 		flex-direction: row;
 		justify-content: space-around;
 		align-items: center;
 		height: 45px;
-		border-top: 1px #eee solid;
+		// border-top: 1px #eee solid;
 	}
 
 	.card-actions-item {

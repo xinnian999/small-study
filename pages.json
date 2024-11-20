@@ -7,7 +7,7 @@
 	}, {
 		"path": "pages/index/know",
 		"style": {
-			"navigationBarTitleText": "认知启蒙"
+			"navigationBarTitleText": "识图"
 		}
 	}],
 	"globalStyle": {
