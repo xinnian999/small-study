@@ -32,21 +32,23 @@ export const useKnowStore = defineStore('know', {
 		current() {
 			return this.dataSource[this.index - 1]
 		},
+		total() {
+			return this.current.no + this.current.yes
+		},
 		accuracy() {
-			// return this.current.yes / (this.current.no + this.current.yes) * 100).toFixed()
 			return (this.current.yes / (this.current.no + this.current.yes) * 100).toFixed() + '%'
 		}
 	},
 	actions: {
 		handleYes() {
+			this.current.yes++
 			if (this.index < this.dataSource.length) {
-				this.current.yes++
 				this.index++
 			}
 		},
 		handleNo() {
+			this.current.no++
 			if (this.index < this.dataSource.length) {
-				this.current.no++
 				this.index++
 			}
 		},
