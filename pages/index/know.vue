@@ -22,6 +22,10 @@
 
 	<uni-pagination v-model="store.index" :current="store.index" class="pagination" :total="store.dataSource.length"
 		page-size="1" prev-text="上一个" next-text="下一个" />
+
+	<uni-popup ref="popup" type="message">
+		<uni-popup-message type="error" message="已加入错题集" :duration="2000"></uni-popup-message>
+	</uni-popup>
 </template>
 
 <script setup>
@@ -34,10 +38,12 @@
 	} from '@/stores/know.js'
 
 	const store = useKnowStore()
-	
-	const handleError=()=>{
+
+	const popup = ref()
+
+	const handleError = () => {
 		store.handleNo()
-		// dialogToggle('已加入错题集')
+		popup.value.open()
 	}
 </script>
 
