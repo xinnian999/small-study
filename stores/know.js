@@ -3,6 +3,7 @@ import {
 	defineStore
 } from 'pinia';
 
+
 const mock = [{
 		img: 'https://web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg',
 		yes: 0,
@@ -20,17 +21,36 @@ const mock = [{
 	}
 ]
 
-export const useKnowListStore = defineStore('know', {
+export const useKnowStore = defineStore('know', {
 	state: () => {
 		return {
-			dataSource: mock
+			dataSource: mock,
+			index: 1
 		};
 	},
-	// 也可以这样定义
-	// state: () => ({ count: 0 })
+	getters: {
+		current() {
+			return this.dataSource[this.index - 1]
+		},
+		accuracy() {
+			// return this.current.yes / (this.current.no + this.current.yes) * 100).toFixed()
+			return (this.current.yes / (this.current.no + this.current.yes) * 100).toFixed() + '%'
+		}
+	},
 	actions: {
-		increment() {
-			this.count++;
+		handleYes() {
+			if (this.index < this.dataSource.length) {
+				this.current.yes++
+				this.index++
+			}
+		},
+		handleNo() {
+			if (this.index < this.dataSource.length) {
+				this.current.no++
+				this.index++
+			}
 		},
 	},
+
+	unistorage: true
 });
