@@ -9,6 +9,11 @@
 		"style": {
 			"navigationBarTitleText": "识图"
 		}
+	}, {
+		"path": "pages/index/know-errors",
+		"style": {
+			"navigationBarTitleText": "识图错题集"
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

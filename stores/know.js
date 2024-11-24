@@ -2,29 +2,16 @@
 import {
 	defineStore
 } from 'pinia';
-
-
-const mock = [{
-		img: 'https://web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg',
-		yes: 0,
-		no: 0
-	},
-	{
-		img: 'https://img1.baidu.com/it/u=1734482911,583275848&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1372',
-		yes: 0,
-		no: 0
-	},
-	{
-		img: 'https://img2.baidu.com/it/u=546282302,1627291091&fm=253&fmt=auto&app=120&f=JPEG?w=1228&h=800',
-		yes: 0,
-		no: 0
-	}
-]
+import {
+	uniqBy
+} from "lodash"
+import mock from './mock';
 
 export const useKnowStore = defineStore('know', {
 	state: () => {
 		return {
 			dataSource: mock,
+			errors: [],
 			index: 1
 		};
 	},
@@ -48,11 +35,18 @@ export const useKnowStore = defineStore('know', {
 		},
 		handleNo() {
 			this.current.no++
+			this.errors.push(this.current)
+			this.errors = uniqBy(this.errors, 'id')
 			if (this.index < this.dataSource.length) {
 				this.index++
 			}
 		},
+		setErrors(errors) {
+			this.errors = errors
+		}
 	},
 
-	unistorage: true
+	unistorage: {
+		paths: ['dataSource', 'errors']
+	}
 });

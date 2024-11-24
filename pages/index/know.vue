@@ -1,6 +1,6 @@
 <template>
 	<uni-section title="这是什么？" type="line">
-		<uni-card :cover="cover">
+		<uni-card>
 			<image slot='cover' style="width: 100%;" :src="store.current.img"></image>
 			<!-- <text class="uni-body">这是一个带封面和操作栏的卡片示例，此示例展示了封面插槽和操作栏插槽的用法。</text> -->
 			<view slot="actions" class="card-actions">
