@@ -1,18 +1,25 @@
 {
 	"pages": [{
-		"path": "pages/index/index",
+		"path": "pages/tabBar/Home/index",
 		"style": {
-			"navigationBarTitleText": "小学习通"
+			"navigationBarTitleText": "功能菜单"
 		}
 	}, {
-		"path": "pages/index/know",
+		"path": "pages/tabBar/Home/know",
 		"style": {
 			"navigationBarTitleText": "识图"
 		}
 	}, {
-		"path": "pages/index/know-errors",
+		"path": "pages/tabBar/Home/know-errors",
 		"style": {
 			"navigationBarTitleText": "识图错题集"
+		}
+	},
+	{
+		"path" : "pages/tabBar/Admin/index/index",
+		"style" : 
+		{
+			"navigationBarTitleText" : "管理"
 		}
 	}],
 	"globalStyle": {
@@ -23,5 +30,25 @@
 		"app-plus": {
 			"background": "#efeff4"
 		}
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#007AFF",
+		"borderStyle": "black",
+		"backgroundColor": "#F8F8F8",
+		"list": [{
+				"pagePath": "pages/tabBar/Home/index",
+				"iconPath": "static/c1.png",
+				"selectedIconPath": "static/c1.png",
+				"text": "功能"
+			},
+			{
+				"pagePath": "pages/tabBar/Admin/index/index",
+				"iconPath": "static/c2.png",
+				"selectedIconPath": "static/c2.png",
+				"text": "管理"
+			}
+
+		]
 	}
 }
