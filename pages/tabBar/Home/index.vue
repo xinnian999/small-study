@@ -20,8 +20,8 @@
 		uni.clearStorage()
 	}
 	const cos = new COS({
-		SecretId: 'AKIDGNo5LTfppeFhy72zqUt8UhfdNuCIApFS',
-		SecretKey: '6xZxLVR8bsDSUZaR9f0B9wXv795BD6tZ',
+		// SecretId: 'AKIDGNo5LTfppeFhy72zqUt8UhfdNuCIApFS',
+		// SecretKey: '6xZxLVR8bsDSUZaR9f0B9wXv795BD6tZ',
 	});
 
 
