@@ -21,6 +21,13 @@
 		{
 			"navigationBarTitleText" : "管理"
 		}
+	},
+	{
+		"path" : "pages/tabBar/Admin/ImageLibrary/index",
+		"style" : 
+		{
+			"navigationBarTitleText" : "图库"
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

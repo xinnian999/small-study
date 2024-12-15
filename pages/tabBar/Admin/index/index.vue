@@ -1,29 +1,40 @@
 <template>
 	<view>
-		<uni-card :is-shadow="false" is-full>
-			<text class="uni-h6">轻松管理，分配各种数据</text>
-		</uni-card>
-
-		<uni-section title="可管理项" type="line" padding>
-			<uni-grid :column="4" :highlight="true" @change="change">
-				<uni-grid-item v-for="(item, index) in menus" :index="index" :key="index">
-					<view class="grid-item-box" style="background-color: #fff;">
-						<uni-icons type="image" :size="30" color="#777" />
-						<text class="text">{{item.label}}</text>
-					</view>
-				</uni-grid-item>
-			</uni-grid>
-		</uni-section>
+		<uni-grid :column="4" :highlight="true" @change="change">
+			<uni-grid-item v-for="(item, index) in menus" :index="index" :key="index">
+				<view class="grid-item-box" style="background-color: #fff;" @click="goPath(item.path)">
+					<uni-icons type="image" :size="30" color="#777" />
+					<text class="text">{{item.label}}</text>
+				</view>
+			</uni-grid-item>
+		</uni-grid>
 	</view>
 </template>
 
 <script setup>
-	const menus=[
-		{label:'识图管理',path:''},
-		{label:'图库',path:''},
-		{label:'xx管理',path:''},
-		{label:'xx管理',path:''}
+	const menus = [{
+			label: '图库',
+			path: '/pages/tabBar/Admin/ImageLibrary/index'
+		}, {
+			label: '识图管理',
+			path: ''
+		},
+
+		{
+			label: 'xx管理',
+			path: ''
+		},
+		{
+			label: 'xx管理',
+			path: ''
+		}
 	]
+
+	const goPath = (path) => {
+		uni.navigateTo({
+			url: path
+		})
+	}
 </script>
 
 <style lang="scss">
