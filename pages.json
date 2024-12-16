@@ -28,6 +28,13 @@
 		{
 			"navigationBarTitleText" : "图库"
 		}
+	},
+	{
+		"path" : "pages/tabBar/Admin/KnowAdmin/KnowAdmin",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -45,14 +52,14 @@
 		"backgroundColor": "#F8F8F8",
 		"list": [{
 				"pagePath": "pages/tabBar/Home/index",
-				"iconPath": "static/c1.png",
-				"selectedIconPath": "static/c1.png",
-				"text": "功能"
+				"iconPath": "static/study.png",
+				"selectedIconPath": "static/study.png",
+				"text": "学习"
 			},
 			{
 				"pagePath": "pages/tabBar/Admin/index/index",
-				"iconPath": "static/c2.png",
-				"selectedIconPath": "static/c2.png",
+				"iconPath": "static/admin.png",
+				"selectedIconPath": "static/admin.png",
 				"text": "管理"
 			}
 

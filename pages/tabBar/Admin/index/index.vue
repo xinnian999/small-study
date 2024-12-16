@@ -3,7 +3,7 @@
 		<uni-grid :column="4" :highlight="true" @change="change">
 			<uni-grid-item v-for="(item, index) in menus" :index="index" :key="index">
 				<view class="grid-item-box" style="background-color: #fff;" @click="goPath(item.path)">
-					<uni-icons type="image" :size="30" color="#777" />
+					<uni-icons :type="item.icon||'image'" :size="30" color="#777" />
 					<text class="text">{{item.label}}</text>
 				</view>
 			</uni-grid-item>
@@ -14,10 +14,12 @@
 <script setup>
 	const menus = [{
 			label: '图库',
+			icon: 'images',
 			path: '/pages/tabBar/Admin/ImageLibrary/index'
 		}, {
 			label: '识图管理',
-			path: ''
+			icon: 'image',
+			path: '/pages/tabBar/Admin/KnowAdmin/KnowAdmin'
 		},
 
 		{
