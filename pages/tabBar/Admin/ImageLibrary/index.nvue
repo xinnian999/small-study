@@ -49,6 +49,10 @@
 		{
 			value: 'food',
 			label: '美食',
+		},
+		{
+			value: 'fruit',
+			label: '水果',
 		}
 	]
 
