@@ -1,41 +1,49 @@
 {
 	"pages": [{
-		"path": "pages/tabBar/Home/index",
-		"style": {
-			"navigationBarTitleText": "功能菜单"
-		}
-	}, {
-		"path": "pages/tabBar/Home/know",
-		"style": {
-			"navigationBarTitleText": "识图"
-		}
-	}, {
-		"path": "pages/tabBar/Home/know-errors",
-		"style": {
-			"navigationBarTitleText": "识图错题集"
-		}
-	},
-	{
-		"path" : "pages/tabBar/Admin/index/index",
-		"style" : 
+			"path": "pages/Login/Login",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/Login/Register",
+			"style": {
+				"navigationBarTitleText": "注册小学习通"
+			}
+		}, {
+			"path": "pages/tabBar/Home/index",
+			"style": {
+				"navigationBarTitleText": "功能菜单"
+			}
+		}, {
+			"path": "pages/tabBar/Home/know",
+			"style": {
+				"navigationBarTitleText": "识图"
+			}
+		}, {
+			"path": "pages/tabBar/Home/know-errors",
+			"style": {
+				"navigationBarTitleText": "识图错题集"
+			}
+		},
 		{
-			"navigationBarTitleText" : "管理"
-		}
-	},
-	{
-		"path" : "pages/tabBar/Admin/ImageLibrary/index",
-		"style" : 
+			"path": "pages/tabBar/Admin/index/index",
+			"style": {
+				"navigationBarTitleText": "管理"
+			}
+		},
 		{
-			"navigationBarTitleText" : "图库"
-		}
-	},
-	{
-		"path" : "pages/tabBar/Admin/KnowAdmin/KnowAdmin",
-		"style" : 
+			"path": "pages/tabBar/Admin/ImageLibrary/index",
+			"style": {
+				"navigationBarTitleText": "图库"
+			}
+		},
 		{
-			"navigationBarTitleText" : ""
+			"path": "pages/tabBar/Admin/KnowAdmin/KnowAdmin",
+			"style": {
+				"navigationBarTitleText": ""
+			}
 		}
-	}],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
