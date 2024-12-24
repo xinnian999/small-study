@@ -78,16 +78,22 @@
 
 	const handleLogin = async () => {
 		await form.value.validate()
-
 		const {
+			statusCode,
 			data
 		} = await loginApi.login(values)
 
-		if (data.errno === 0) {
+		if (statusCode === 200) {
+			const token = data.access_token
+			uni.setStorage({
+				key: 'auth_token',
+				data: token
+			})
+
 			message.value.open()
 		}
 
-		if (data.errno === 1) {
+		if (statusCode === 401) {
 			errorDialog.value.open()
 		}
 	}
@@ -102,7 +108,7 @@
 
 <style scoped lang="scss">
 	body {
-		background-color: #eee;
+		background-image: linear-gradient(to bottom, #FF5F6D, #FFC371);
 	}
 
 	.login-page {

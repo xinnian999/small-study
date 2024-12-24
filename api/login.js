@@ -1,8 +1,8 @@
-const baseURL = 'http://8.141.86.20:3000'
+// import { baseURL } from "./baseURL"
 
 export const register = (data) => {
 	return uni.request({
-		url: baseURL + '/user/create',
+		url: '/user/create',
 		method: 'POST',
 		data
 	})
@@ -10,7 +10,7 @@ export const register = (data) => {
 
 export const login = (data) => {
 	return uni.request({
-		url: baseURL + '/user/login',
+		url: '/auth/login',
 		method: 'POST',
 		data
 	})

@@ -1,18 +1,3 @@
-// #ifndef VUE3
-import Vue from 'vue'
-import App from './App'
-
-Vue.config.productionTip = false
-
-App.mpType = 'app'
-
-const app = new Vue({
-	...App
-})
-app.$mount()
-// #endif
-
-// #ifdef VUE3
 import App from './App'
 import {
 	createSSRApp
@@ -35,4 +20,36 @@ export function createApp() {
 		Pinia, // 此处必须将 Pinia 返回
 	};
 }
-// #endif
+
+// const baseURL = 'http://8.141.86.20:3000'
+const baseURL = 'http://172.20.72.37:3000'
+
+uni.addInterceptor('request', {
+	 invoke(args) {
+		// request 触发前拼接 url
+		args.url = baseURL + args.url
+
+		// const {
+		// 	data
+		// } = await uni.getStorage({
+		// 	key: 'auth_token'
+		// })
+
+		// if (data) {
+		// 	console.log(args)
+		// 	args.header = {
+		// 		authorization: data
+		// 	}
+		// }
+	},
+	success(args) {
+		// 请求成功后，修改code值为1
+		// args.data.code = 1
+	},
+	fail(err) {
+		console.log('interceptor-fail', err)
+	},
+	complete(res) {
+		console.log('interceptor-complete', res)
+	}
+})

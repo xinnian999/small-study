@@ -123,7 +123,7 @@
 
 <style scoped lang="scss">
 	body {
-		background-color: #eee;
+		background-image: linear-gradient(to bottom, #FF5F6D, #FFC371);
 	}
 
 	.login-page {
