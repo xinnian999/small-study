@@ -12,7 +12,7 @@
 		}, {
 			"path": "pages/tabBar/Home/index",
 			"style": {
-				"navigationBarTitleText": "功能菜单"
+				"navigationBarTitleText": "学习"
 			}
 		}, {
 			"path": "pages/tabBar/Home/know",
@@ -42,6 +42,26 @@
 			"style": {
 				"navigationBarTitleText": ""
 			}
+		},
+		{
+			"path": "pages/tabBar/User/User",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path" : "pages/tabBar/User/Info/index",
+			"style" : 
+			{
+				"navigationBarTitleText" : "个人信息"
+			}
+		},
+		{
+			"path" : "pages/tabBar/User/Info/NickName",
+			"style" : 
+			{
+				"navigationBarTitleText" : "修改昵称"
+			}
 		}
 	],
 	"globalStyle": {
@@ -69,8 +89,13 @@
 				"iconPath": "static/admin.png",
 				"selectedIconPath": "static/admin.png",
 				"text": "管理"
+			},
+			{
+				"pagePath": "pages/tabBar/User/User",
+				"iconPath": "static/my.png",
+				"selectedIconPath": "static/my.png",
+				"text": "我的"
 			}
-
 		]
 	}
 }

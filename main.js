@@ -25,31 +25,36 @@ export function createApp() {
 const baseURL = 'http://172.20.72.37:3000'
 
 uni.addInterceptor('request', {
-	 invoke(args) {
+	invoke(args) {
 		// request 触发前拼接 url
 		args.url = baseURL + args.url
+		args.header = {
+			test: 1112
+		}
 
-		// const {
-		// 	data
-		// } = await uni.getStorage({
-		// 	key: 'auth_token'
-		// })
+		const token = uni.getStorageSync('auth_token')
 
-		// if (data) {
-		// 	console.log(args)
-		// 	args.header = {
-		// 		authorization: data
-		// 	}
-		// }
+		if (token) {
+			args.header.authorization = `Bearer ${token}`
+		}
 	},
 	success(args) {
 		// 请求成功后，修改code值为1
 		// args.data.code = 1
 	},
 	fail(err) {
-		console.log('interceptor-fail', err)
+		// console.log('interceptor-fail', err)
 	},
 	complete(res) {
-		console.log('interceptor-complete', res)
+		// 获取当前页面的路由地址
+		// const pages = getCurrentPages(); // 获取当前页面栈
+		// const currentPage = pages[pages.length - 1]; // 获取当前页面实例
+		// const path = currentPage.route; // 获取当前页面的路由地址
+
+		if (res.statusCode === 401 && res.data.message !== 'passwordError') {
+			uni.navigateTo({
+				url: '/pages/Login/Login'
+			})
+		}
 	}
 })

@@ -41,7 +41,14 @@
 		reactive,
 		ref
 	} from 'vue';
-	import * as loginApi from '@/api/login.js'
+	import * as authApi from '@/api/auth.js'
+	import {
+		useGlobalStore
+	} from '@/stores/global.js';
+
+	const {
+		setUserInfo
+	} = useGlobalStore()
 
 	const message = ref()
 	const errorDialog = ref()
@@ -81,16 +88,26 @@
 		const {
 			statusCode,
 			data
-		} = await loginApi.login(values)
+		} = await authApi.login(values)
 
 		if (statusCode === 200) {
 			const token = data.access_token
-			uni.setStorage({
-				key: 'auth_token',
-				data: token
-			})
+			uni.setStorageSync('auth_token', token)
+
+			const {
+				data: userInfo
+			} = await authApi.getUserInfo()
+
+			// uni.setStorageSync('user_info', userInfo)
+			setUserInfo(userInfo)
 
 			message.value.open()
+
+			setTimeout(() => {
+				uni.switchTab({
+					url: '/pages/tabBar/Home/index'
+				})
+			}, 2000)
 		}
 
 		if (statusCode === 401) {
