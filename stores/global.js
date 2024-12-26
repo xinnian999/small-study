@@ -4,6 +4,7 @@ import {
 import {
 	uniqBy
 } from "lodash";
+import * as authApi from '@/api/auth.js'
 
 export const useGlobalStore = defineStore("global", {
 	state: () => {
@@ -18,6 +19,16 @@ export const useGlobalStore = defineStore("global", {
 		setUserInfo(data) {
 			this.userInfo = data;
 		},
+		updateUserInfo() {
+			authApi.getUserInfo().then(({
+				statusCode,
+				data
+			}) => {
+				if (statusCode === 200) {
+					this.userInfo = data;
+				}
+			})
+		}
 	},
 	unistorage: {
 		paths: ["userInfo"],

@@ -24,7 +24,7 @@ export function createApp() {
 // const baseURL = 'http://8.141.86.20:3000'
 const baseURL = 'http://172.20.72.37:3000'
 
-uni.addInterceptor('request', {
+const interceptorOptions = {
 	invoke(args) {
 		// request 触发前拼接 url
 		args.url = baseURL + args.url
@@ -46,15 +46,18 @@ uni.addInterceptor('request', {
 		// console.log('interceptor-fail', err)
 	},
 	complete(res) {
-		// 获取当前页面的路由地址
-		// const pages = getCurrentPages(); // 获取当前页面栈
-		// const currentPage = pages[pages.length - 1]; // 获取当前页面实例
-		// const path = currentPage.route; // 获取当前页面的路由地址
-
 		if (res.statusCode === 401 && res.data.message !== 'passwordError') {
+			uni.clearStorageSync('auth_token')
+			uni.showToast({
+				title: '登陆过期',
+				icon: 'error'
+			})
 			uni.navigateTo({
 				url: '/pages/Login/Login'
 			})
 		}
 	}
-})
+}
+
+uni.addInterceptor('request', interceptorOptions)
+uni.addInterceptor('uploadFile', interceptorOptions)

@@ -38,7 +38,7 @@
 		reactive,
 		ref
 	} from 'vue';
-	import * as loginApi from '@/api/login.js'
+	import * as authApi from '@/api/auth.js'
 
 	const form = ref()
 
@@ -92,17 +92,19 @@
 	const handleOk = async () => {
 		await form.value.validate()
 
-		const res = await loginApi.register({
+		const {
+			statusCode
+		} = await authApi.register({
 			username: values.username,
 			password: values.confimPassword
 		})
 
 
-		if (res.data.errno === 0) {
+		if (statusCode === 200) {
 			alertDialog.value.open()
 		}
 
-		if (res.data.errno === 1062) {
+		if (statusCode === 409) {
 			errorDialog.value.open()
 		}
 
@@ -113,19 +115,9 @@
 			url: '/pages/Login/Login'
 		})
 	}
-
-	onMounted(() => {
-		uni.setBackgroundColor({
-			backgroundColor: 'aqua'
-		})
-	})
 </script>
 
-<style scoped lang="scss">
-	body {
-		background-image: linear-gradient(to bottom, #FF5F6D, #FFC371);
-	}
-
+<style lang="scss">
 	.login-page {
 		padding: 0 20px;
 

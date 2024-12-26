@@ -14,12 +14,9 @@
 		useGlobalStore
 	} from '@/stores/global';
 
-	const {
-		userInfo,
-		setUserInfo
-	} = useGlobalStore()
-	
-	const value = ref(userInfo.nickname)
+	const globalStore = useGlobalStore()
+
+	const value = ref(globalStore.userInfo.nickname)
 
 	const handleSave = async () => {
 		const {
@@ -29,9 +26,9 @@
 		})
 
 		if (statusCode === 200) {
-			uni.navigateTo({
-				url: '/pages/tabBar/User/Info/index'
-			})
+			globalStore.updateUserInfo()
+
+			uni.navigateBack()
 		}
 	}
 </script>

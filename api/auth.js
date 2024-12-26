@@ -1,16 +1,14 @@
-// import { baseURL } from "./baseURL"
-
-export const register = (data) => {
+export const login = (data) => {
 	return uni.request({
-		url: '/user/create',
+		url: '/auth/login',
 		method: 'POST',
 		data
 	})
 }
 
-export const login = (data) => {
+export const register = (data) => {
 	return uni.request({
-		url: '/auth/login',
+		url: '/auth/register',
 		method: 'POST',
 		data
 	})

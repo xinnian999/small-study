@@ -16,6 +16,9 @@
 </script>
 
 <style lang="scss">
-
+page{
+	background-color: #eee;
+	position: relative;
+}
 
 </style>

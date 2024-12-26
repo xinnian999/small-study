@@ -2,7 +2,8 @@
 	"pages": [{
 			"path": "pages/Login/Login",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"backgroundColor": "#FF5F6D"
 			}
 		}, {
 			"path": "pages/Login/Register",
@@ -50,17 +51,15 @@
 			}
 		},
 		{
-			"path" : "pages/tabBar/User/Info/index",
-			"style" : 
-			{
-				"navigationBarTitleText" : "个人信息"
+			"path": "pages/tabBar/User/Info/index",
+			"style": {
+				"navigationBarTitleText": "个人信息"
 			}
 		},
 		{
-			"path" : "pages/tabBar/User/Info/NickName",
-			"style" : 
-			{
-				"navigationBarTitleText" : "修改昵称"
+			"path": "pages/tabBar/User/Info/NickName",
+			"style": {
+				"navigationBarTitleText": "修改昵称"
 			}
 		}
 	],
@@ -68,9 +67,9 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8",
+		"backgroundColor": "#000",
 		"app-plus": {
-			"background": "#efeff4"
+			"background": "#eee"
 		}
 	},
 	"tabBar": {

@@ -2,7 +2,7 @@
 	<view class="user">
 		<view class="userBar" @click="goInfo">
 			<view class="avatar">
-				<image class="img" :src="userInfo.avatar" />
+				<image class="img" :src="userInfo.avatar" webp />
 			</view>
 			<view class="names">
 				<view class="nickname">
@@ -20,21 +20,37 @@
 			<uni-list-item showArrow title="图库" />
 			<uni-list-item showArrow title="识图管理" />
 		</uni-list>
+
+		<uni-list class="list">
+			<uni-list-item showArrow title="退出登陆" @click="handleLogout" clickable />
+		</uni-list>
 	</view>
 </template>
 
 <script setup>
 	import {
+		toRefs
+	} from 'vue';
+	import {
 		useGlobalStore
 	} from '@/stores/global';
 
+	const globalStore = useGlobalStore()
+
 	const {
 		userInfo
-	} = useGlobalStore()
+	} = toRefs(globalStore)
 
 	const goInfo = () => {
 		uni.navigateTo({
 			url: 'Info/index'
+		})
+	}
+	
+	const handleLogout=()=>{
+		uni.clearStorageSync('auth_token')
+		uni.navigateTo({
+			url: '/pages/Login/Login'
 		})
 	}
 </script>

@@ -26,30 +26,52 @@
 		useGlobalStore
 	} from '@/stores/global';
 
-	const {
-		userInfo,
-		setUserInfo
-	} = useGlobalStore()
+	const globalStore = useGlobalStore()
 
-	onMounted(async () => {
-		authApi.getUserInfo().then(({
-			statusCode,
-			data
-		}) => {
-			if (statusCode === 200) {
-				setUserInfo(data)
-			}
-		})
-	})
+	// onMounted(async () => {
+	// 	authApi.getUserInfo().then(({
+	// 		statusCode,
+	// 		data
+	// 	}) => {
+	// 		if (statusCode === 200) {
+	// 			setUserInfo(data)
+	// 		}
+	// 	})
+	// })
 
 	const list = computed(() => {
+		const {
+			userInfo
+		} = globalStore
+
 		return [{
 				label: '头像',
 				value: userInfo.avatar,
 				avatar: true,
 				showArrow: true,
 				onClick: () => {
+					uni.chooseImage({
+						success: async (chooseImageRes) => {
+							const files = chooseImageRes.tempFiles;
 
+							const {
+								statusCode
+							} = await uni.uploadFile({
+								url: '/upload/userAvatar',
+								file: files[0],
+								formData: {}
+							})
+
+							if (statusCode === 201) {
+								uni.showToast({
+									title: '更新成功'
+								})
+								
+								globalStore.updateUserInfo()
+							}
+
+						}
+					})
 				}
 			},
 			{

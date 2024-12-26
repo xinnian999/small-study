@@ -25,14 +25,6 @@
 
 	</view>
 
-	<uni-popup ref="message" type="message">
-		<uni-popup-message type="success" message="登陆成功,即将进入..." :duration="2000" />
-	</uni-popup>
-
-	<uni-popup ref="errorDialog" type="dialog">
-		<uni-popup-dialog type="success" :showClose="false" title="登陆失败" content="用户名或密码错误,请重新输入"></uni-popup-dialog>
-	</uni-popup>
-
 </template>
 
 <script setup>
@@ -46,12 +38,7 @@
 		useGlobalStore
 	} from '@/stores/global.js';
 
-	const {
-		setUserInfo
-	} = useGlobalStore()
-
-	const message = ref()
-	const errorDialog = ref()
+	const globalStore = useGlobalStore()
 
 	const form = ref()
 
@@ -94,42 +81,49 @@
 			const token = data.access_token
 			uni.setStorageSync('auth_token', token)
 
-			const {
-				data: userInfo
-			} = await authApi.getUserInfo()
+			globalStore.updateUserInfo()
 
-			// uni.setStorageSync('user_info', userInfo)
-			setUserInfo(userInfo)
+			// message.value.open()
 
-			message.value.open()
+			uni.showToast({
+				title: '登陆成功'
+			})
 
 			setTimeout(() => {
 				uni.switchTab({
 					url: '/pages/tabBar/Home/index'
 				})
-			}, 2000)
+			}, 1000)
 		}
 
 		if (statusCode === 401) {
-			errorDialog.value.open()
+			uni.switchTab({
+				url: '/pages/tabBar/Home/index'
+			})
 		}
 	}
 
-
 	onMounted(() => {
-		uni.setBackgroundColor({
-			backgroundColor: 'aqua'
-		})
+		const token = uni.getStorageSync('auth_token')
+
+		if (token) {
+			uni.switchTab({
+				url: '/pages/tabBar/Home/index'
+			})
+		}
 	})
 </script>
 
-<style scoped lang="scss">
-	body {
-		background-image: linear-gradient(to bottom, #FF5F6D, #FFC371);
-	}
-
+<style lang="scss">
 	.login-page {
 		padding: 0 20px;
+		box-sizing: border-box;
+		width: 100vw;
+		height: 100vh;
+		background-image: linear-gradient(to bottom, #FF5F6D, #FFC371);
+		position: absolute;
+		top: 0;
+		left: 0;
 
 		.logo {
 			text-align: center;
