@@ -16,13 +16,9 @@
 			<uni-icons type="right" size="16" class="ico" color="rgb(187, 187, 187)"></uni-icons>
 		</view>
 
-		<uni-list class="list">
-			<uni-list-item showArrow title="图库" />
-			<uni-list-item showArrow title="识图管理" />
-		</uni-list>
-
-		<uni-list class="list">
-			<uni-list-item showArrow title="退出登陆" @click="handleLogout" clickable />
+		<uni-list class="list" v-for="{list,key} in listConfig" :key="key">
+			<uni-list-item v-for="{title,onClick,icon} in list" :key="title" showArrow :title="title" @click="onClick"
+				clickable :thumb="icon" />
 		</uni-list>
 	</view>
 </template>
@@ -46,20 +42,53 @@
 			url: 'Info/index'
 		})
 	}
-	
-	const handleLogout=()=>{
+
+	const handleLogout = () => {
 		uni.clearStorageSync('auth_token')
 		uni.navigateTo({
 			url: '/pages/Login/Login'
 		})
 	}
+
+	const listConfig = [{
+			key: '1',
+			list: [{
+					title: '图库',
+					icon: "/static/tuku.png",
+					onClick: () => {
+						uni.navigateTo({
+							url: 'Gallery/index'
+						})
+					}
+				},
+				{
+					title: '识图管理',
+					icon: "/static/studyImage.png",
+					onClick: () => {
+						uni.navigateTo({
+							url: 'Gallery/index'
+						})
+					}
+				}
+			]
+		},
+		{
+			key: '2',
+			list: [{
+				title: '退出登陆',
+				icon: "/static/logout.png",
+				onClick: () => {
+					uni.clearStorageSync('auth_token')
+					uni.navigateTo({
+						url: '/pages/Login/Login'
+					})
+				}
+			}]
+		}
+	]
 </script>
 
-<style scoped lang="scss">
-	body {
-		background-color: #eee;
-	}
-
+<style lang="scss">
 	.user {
 
 		.userBar {

@@ -22,22 +22,13 @@
 		ref
 	} from 'vue'
 	import * as authApi from '@/api/auth.js'
+	import * as uploadApi from '@/api/upload.js'
 	import {
 		useGlobalStore
 	} from '@/stores/global';
 
 	const globalStore = useGlobalStore()
 
-	// onMounted(async () => {
-	// 	authApi.getUserInfo().then(({
-	// 		statusCode,
-	// 		data
-	// 	}) => {
-	// 		if (statusCode === 200) {
-	// 			setUserInfo(data)
-	// 		}
-	// 	})
-	// })
 
 	const list = computed(() => {
 		const {
@@ -56,17 +47,13 @@
 
 							const {
 								statusCode
-							} = await uni.uploadFile({
-								url: '/upload/userAvatar',
-								file: files[0],
-								formData: {}
-							})
+							} = await uploadApi.userAvatar(files[0])
 
 							if (statusCode === 201) {
 								uni.showToast({
 									title: '更新成功'
 								})
-								
+
 								globalStore.updateUserInfo()
 							}
 

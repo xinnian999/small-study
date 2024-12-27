@@ -61,6 +61,12 @@
 			"style": {
 				"navigationBarTitleText": "修改昵称"
 			}
+		},
+		{
+			"path": "pages/tabBar/User/Gallery/index",
+			"style": {
+				"navigationBarTitleText": "图库"
+			}
 		}
 	],
 	"globalStyle": {
