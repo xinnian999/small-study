@@ -86,6 +86,9 @@
 			}]
 		}
 	]
+	
+	
+	globalStore.updateUserInfo()
 </script>
 
 <style lang="scss">

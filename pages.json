@@ -2,8 +2,7 @@
 	"pages": [{
 			"path": "pages/Login/Login",
 			"style": {
-				"navigationStyle": "custom",
-				"backgroundColor": "#FF5F6D"
+				"navigationStyle": "custom"
 			}
 		}, {
 			"path": "pages/Login/Register",
@@ -24,24 +23,6 @@
 			"path": "pages/tabBar/Home/know-errors",
 			"style": {
 				"navigationBarTitleText": "识图错题集"
-			}
-		},
-		{
-			"path": "pages/tabBar/Admin/index/index",
-			"style": {
-				"navigationBarTitleText": "管理"
-			}
-		},
-		{
-			"path": "pages/tabBar/Admin/ImageLibrary/index",
-			"style": {
-				"navigationBarTitleText": "图库"
-			}
-		},
-		{
-			"path": "pages/tabBar/Admin/KnowAdmin/KnowAdmin",
-			"style": {
-				"navigationBarTitleText": ""
 			}
 		},
 		{
