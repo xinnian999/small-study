@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"lodash": "^4.17.21",
-		"cos-js-sdk-v5": "^1.8.6"
+		"lodash": "^4.17.21"
 	}
 }

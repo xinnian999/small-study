@@ -1,6 +1,10 @@
 <template>
 	<view class="Gallery">
-		<l-tabs v-model="type" :list="typeConfig" :space-evenly="false" />
+		<!-- <l-tabs v-model="type" :list="typeConfig" :space-evenly="false" /> -->
+		<view class="uni-padding-wrap uni-common-mt">
+			<uni-segmented-control :current="typeIndex" :values="typeConfig.map(item=>item.label)" style-type="text"
+				@clickItem="onTabClick" />
+		</view>
 
 		<button type="primary" size="mini" @click="upload">上传{{typeLabel}}图片</button>
 
@@ -12,7 +16,10 @@
 			</view>
 		</view>
 
-		<kevy-empty v-else :show="true" type="list" text="无数据" class="list-empty"></kevy-empty>
+		<view v-else class="empty">
+			这个分类下还没有图片~
+		</view>
+		<!-- <kevy-empty v-else :show="true" type="list" text="无数据" class="list-empty"></kevy-empty> -->
 	</view>
 
 </template>
@@ -31,9 +38,11 @@
 
 	const loading = ref(false)
 
-	const type = ref('plant')
+	const typeIndex = ref(0)
 
-	const typeLabel = computed(() => typeConfig.find(item => item.value === type.value)?.label)
+	const typeLabel = computed(() => typeConfig.find((item, index) => index === typeIndex.value)?.label)
+
+	const typeValue = computed(() => typeConfig.find((item, index) => index === typeIndex.value)?.value)
 
 	const typeConfig = [{
 			value: 'plant',
@@ -57,6 +66,12 @@
 		}
 	]
 
+	const onTabClick = ({
+		currentIndex
+	}) => {
+		typeIndex.value = currentIndex
+	}
+
 	const fetchList = async () => {
 
 		loading.value = true
@@ -65,7 +80,7 @@
 			statusCode,
 			data
 		} = await galleryApi.list({
-			type: type.value
+			type: typeValue.value
 		})
 
 		list.value = data
@@ -80,11 +95,12 @@
 			success: async (chooseImageRes) => {
 				const files = chooseImageRes.tempFiles.map(file => ({
 					name: 'file',
-					file
+					file,
+					uri: file.path
 				}));
 
 				await uploadApi.gallery(files, {
-					type: type.value
+					type: typeValue.value
 				})
 
 				fetchList()
@@ -94,7 +110,7 @@
 
 	onMounted(fetchList)
 
-	watch(type, () => {
+	watch(typeIndex, () => {
 		fetchList()
 	})
 </script>
@@ -133,4 +149,20 @@
 		}
 
 	}
-</style>
+
+
+	.uni-padding-wrap {
+		// width: 750rpx;
+		padding: 10px 30px;
+		border-radius: 4px;
+		background-color: #fff;
+		margin-bottom: 10px;
+	}
+
+	.empty {
+		margin-top: 30px;
+		display: flex;
+		align-items: center;
+		// border: 1px solid red;
+	}
+</style> 

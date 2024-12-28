@@ -1,8 +1,8 @@
-export const userAvatar = (file) => {
+export const userAvatar = (files) => {
+	// console.log(files)
 	return uni.uploadFile({
 		url: '/upload/userAvatar',
-		file,
-		name:'file',
+		files,
 		formData: {}
 	})
 }

@@ -83,8 +83,6 @@
 
 			globalStore.updateUserInfo()
 
-			// message.value.open()
-
 			uni.showToast({
 				title: '登陆成功'
 			})

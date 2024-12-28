@@ -12,7 +12,6 @@
 	import {
 		useKnowStore
 	} from '@/stores/know';
-	import COS from 'cos-js-sdk-v5';
 	
 	const knowStore = useKnowStore()
 	

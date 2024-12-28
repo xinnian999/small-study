@@ -21,8 +21,8 @@ export function createApp() {
 	};
 }
 
-// const baseURL = 'http://8.141.86.20:3000'
-const baseURL = 'http://localhost:3000'
+const baseURL = 'http://8.141.86.20:3000'
+// const baseURL = 'http://localhost:3000'
 
 const interceptorOptions = {
 	invoke(args) {
@@ -43,7 +43,12 @@ const interceptorOptions = {
 		// args.data.code = 1
 	},
 	fail(err) {
-		// console.log('interceptor-fail', err)
+		if(err.errMsg="request:fail"){
+			uni.showToast({
+				title: '后端服务挂了',
+				icon: 'error'
+			})
+		}
 	},
 	complete(res) {
 		if (res.statusCode === 401 && res.data.message !== 'passwordError') {

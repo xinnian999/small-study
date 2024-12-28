@@ -43,12 +43,16 @@
 				onClick: () => {
 					uni.chooseImage({
 						success: async (chooseImageRes) => {
-							const files = chooseImageRes.tempFiles;
+							const files = chooseImageRes.tempFiles.map(file => ({
+								name: 'file',
+								file,
+								uri: file.path
+							}));
 
 							const {
 								statusCode
-							} = await uploadApi.userAvatar(files[0])
-
+							} = await uploadApi.userAvatar(files)
+							
 							if (statusCode === 201) {
 								uni.showToast({
 									title: '更新成功'
@@ -56,6 +60,7 @@
 
 								globalStore.updateUserInfo()
 							}
+
 
 						}
 					})
