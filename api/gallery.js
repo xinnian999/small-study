@@ -5,3 +5,11 @@ export const list = (data) => {
 		data
 	})
 }
+
+export const deleteGallery = (data) => {
+	return uni.request({
+		url: '/gallery/delete',
+		method: 'POST',
+		data
+	})
+}
