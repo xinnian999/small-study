@@ -48,6 +48,18 @@
 			"style": {
 				"navigationBarTitleText": "图库"
 			}
+		},
+		{
+			"path": "pages/tabBar/User/KnowAdmin/Menus",
+			"style": {
+				"navigationBarTitleText": "识图管理"
+			}
+		},
+		{
+			"path": "pages/tabBar/User/KnowAdmin/AddMenu",
+			"style": {
+				"navigationBarTitleText": "创建识图分类"
+			}
 		}
 	],
 	"globalStyle": {
@@ -69,12 +81,6 @@
 				"iconPath": "static/study.png",
 				"selectedIconPath": "static/study.png",
 				"text": "学习"
-			},
-			{
-				"pagePath": "pages/tabBar/Admin/index/index",
-				"iconPath": "static/admin.png",
-				"selectedIconPath": "static/admin.png",
-				"text": "管理"
 			},
 			{
 				"pagePath": "pages/tabBar/User/User",
