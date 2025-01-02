@@ -94,12 +94,6 @@
 			}, 1000)
 		}
 
-		if (statusCode === 401) {
-			uni.showToast({
-				title: '密码错误',
-				icon:'error'
-			})
-		}
 	}
 
 	onMounted(() => {

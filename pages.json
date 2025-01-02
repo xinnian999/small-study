@@ -50,15 +50,28 @@
 			}
 		},
 		{
-			"path": "pages/tabBar/User/KnowAdmin/Menus",
+			"path": "pages/tabBar/User/KnowAdmin/Index",
 			"style": {
 				"navigationBarTitleText": "识图管理"
 			}
 		},
 		{
-			"path": "pages/tabBar/User/KnowAdmin/AddMenu",
+			"path": "pages/tabBar/User/KnowAdmin/AddType",
 			"style": {
 				"navigationBarTitleText": "创建识图分类"
+			}
+		},
+		{
+			"path": "pages/tabBar/User/KnowAdmin/EditType",
+			"style": {
+				"navigationBarTitleText": "修改分类信息"
+			}
+		},
+		{
+			"path": "pages/tabBar/User/KnowAdmin/Detail",
+			"style": {
+				"navigationBarTitleText": "识图分类管理"
+				
 			}
 		}
 	],

@@ -66,7 +66,7 @@
 					icon: "/static/studyImage.png",
 					onClick: () => {
 						uni.navigateTo({
-							url: 'KnowAdmin/Menus'
+							url: 'KnowAdmin/Index'
 						})
 					}
 				}

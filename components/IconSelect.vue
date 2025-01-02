@@ -1,13 +1,10 @@
 <template>
 	<view class="IconSelect" @click="handleSelect">
-		<image class="image" :src="`/static/icons/${value||'add'}.png`"></image>
+		<image class="image" :src="iconPath(value||'add')"></image>
 	</view>
 
 	<uni-drawer ref="drawer" mode="right" class="IconSelect-drawer" :width="300">
 		<view class="IconSelect-drawer-content">
-			<!-- <view class="title">
-				请选择一个图标
-			</view> -->
 			<cc-gonggeGrid gridTitle="请选择一个图标" gridNum="3" :gridList="gridList" @gridClick="gridClick"></cc-gonggeGrid>
 		</view>
 
@@ -20,6 +17,7 @@
 		onMounted,
 		ref
 	} from 'vue';
+	import iconPath from '@/utils/iconPath';
 
 	const drawer = ref()
 
@@ -29,12 +27,14 @@
 		drawer.value.open()
 	}
 
-	const icons = ref(['add', 'admin', 'logo', 'logout', 'my', 'study', 'studyImage', 'tuku'])
+	const icons = ref(['add', 'admin', 'logo', 'logout', 'my', 'study', 'studyImage', 'tuku', 'apple', 'banana',
+		'cabbage1', 'carrot', 'grape', 'hamigua', 'horse', 'liulian', 'niu', 'pangxie', 'pear', 'watermelon'
+	])
 
 	const gridList = computed(() => icons.value.map(item => {
 		return {
 			name: item,
-			imgSrc: `/static/icons/${item}.png`
+			imgSrc: iconPath(item)
 		}
 	}))
 

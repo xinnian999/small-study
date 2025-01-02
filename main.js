@@ -44,7 +44,8 @@ const interceptorOptions = {
 		// args.data.code = 1
 	},
 	fail(err) {
-		if(err.errMsg="request:fail"){
+		console.log(err)
+		if (err.errMsg = "request:fail") {
 			uni.showToast({
 				title: '后端服务挂了',
 				icon: 'error'
@@ -52,15 +53,23 @@ const interceptorOptions = {
 		}
 	},
 	complete(res) {
-		if (res.statusCode === 401 && res.data.message !== 'passwordError') {
+		const {
+			message
+		} = res.data
+
+		if (res.statusCode === 401) {
 			uni.clearStorageSync('auth_token')
 			uni.showToast({
-				title: '登陆过期',
+				title: res.data.message,
 				icon: 'error'
 			})
-			uni.navigateTo({
-				url: '/pages/Login/Login'
-			})
+			
+			if (message === '登录过期') {
+				uni.navigateTo({
+					url: '/pages/Login/Login'
+				})
+			}
+
 		}
 	}
 }

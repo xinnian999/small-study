@@ -9,8 +9,9 @@
 
 	<view class="KnowAdmin-menus">
 		<uni-list>
-			<uni-list-item v-for="{name,icon} in list" :key="name" :title="name" note="描述信息" showArrow :thumb="icon"
-				thumb-size="base" rightText="1" />
+			<uni-list-item v-for="item in kaStore.typeList" :key="item.name" :title="item.name" :note="item.desc"
+				showArrow :thumb="iconPath(item.icon)" thumb-size="base" rightText="1" clickable
+				@click="goAdmin(item)" />
 		</uni-list>
 	</view>
 </template>
@@ -22,31 +23,32 @@
 		ref
 	} from 'vue';
 	import * as knowTypeApi from '@/api/knowType.js'
+	import iconPath from '@/utils/iconPath';
+	import {
+		useKaStore
+	} from './store';
 
+
+	const kaStore = useKaStore()
 
 	const popup = ref()
 
-
-
-	const list = ref([])
-
 	const handleAdd = () => {
 		uni.navigateTo({
-			url: 'AddMenu'
+			url: 'AddType'
 		})
 	}
 
-	const fetchList = async () => {
-		const {
-			statusCode,
-			data
-		} = await knowTypeApi.list()
-		if (statusCode === 200) {
-			list.value = data
-		}
+
+	const goAdmin = (data) => {
+		kaStore.setCurrentType(data)
+		uni.navigateTo({
+			url: 'Detail',
+		})
 	}
 
-	onMounted(fetchList)
+
+	onMounted(kaStore.fetchTypeList)
 </script>
 
 <style lang="scss">
