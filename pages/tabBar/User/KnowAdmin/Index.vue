@@ -8,12 +8,15 @@
 	</view>
 
 	<view class="KnowAdmin-menus">
-		<uni-list>
+		<uni-list v-if="kaStore.typeList.length">
 			<uni-list-item v-for="item in kaStore.typeList" :key="item.name" :title="item.name" :note="item.desc"
 				showArrow :thumb="iconPath(item.icon)" thumb-size="base" rightText="1" clickable
 				@click="goAdmin(item)" />
 		</uni-list>
+
+		<kevy-empty v-else :show="true" type="list" text="还没有分类, 创建一个吧"></kevy-empty>
 	</view>
+
 </template>
 
 <script setup>
@@ -66,6 +69,7 @@
 
 	.KnowAdmin-menus {
 		padding: 20px;
+
 
 		.uni-list {
 			gap: 20px;

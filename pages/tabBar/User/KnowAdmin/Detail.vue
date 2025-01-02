@@ -1,7 +1,7 @@
 <template>
 
 	<view class="typeDetail">
-		<uni-list-item :title="info.name" :note="info.desc" :thumb="iconPath(info.icon)" thumb-size="base" clickable>
+		<uni-list-item style="margin-bottom: 20px;" :title="info.name" :note="info.desc" :thumb="iconPath(info.icon)" thumb-size="base" clickable>
 			<template v-slot:footer>
 				<view class="editBtn">
 					<button @click="goEdit" size="mini" type="primary">编辑</button>
@@ -9,6 +9,8 @@
 			</template>
 		</uni-list-item>
 
+
+		<kevy-empty  :show="true" type="list" text="还没有图片, 创建一个吧"></kevy-empty>
 	</view>
 
 </template>
