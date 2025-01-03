@@ -22,8 +22,8 @@ export function createApp() {
 }
 
 // const baseURL = 'http://8.141.86.20:3000'
-// const baseURL = 'http://172.20.72.37:3000'
-const baseURL = 'http://localhost:3000'
+const baseURL = 'http://172.20.72.37:3000'
+// const baseURL = 'http://localhost:3000'
 
 const interceptorOptions = {
 	invoke(args) {

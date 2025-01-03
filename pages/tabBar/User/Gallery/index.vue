@@ -1,213 +1,147 @@
 <template>
 	<view class="Gallery">
-		<l-tabs v-model="type" :list="typeConfig" :space-evenly="false" />
+		<view class="toolbar">
+			<uni-search-bar style="flex: 1;" :focus="true" v-model="q" cancelButton="none" />
 
-		<view class="action1">
-			<button type="primary" size="mini" @click="upload">上传{{typeLabel}}图片</button>
-			<button type="primary" size="mini" @click="isEdit=!isEdit">{{isEdit?'取消批量操作':'批量操作'}}</button>
-		</view>
-
-		<view class="action2" v-if="isEdit">
-			<label @click="isCheckedAll=!isCheckedAll">
-				<radio :checked="isCheckedAll" />全选
-			</label>
-
-			<view class="batchBtn">
-				<button class="mini-btn" type="default" size="mini">批量移动</button>
-				<button class="mini-btn" type="warn" size="mini" @click="handleBatchDelete">批量删除</button>
+			<view class="upload">
+				<button type="primary" size="mini" @click="goUpload">上传</button>
 			</view>
 		</view>
 
-		<l-loading v-if="loading" class="loading" />
+		<view class="main">
+			<view class="left">
+				<view v-for="item in galleryType" :key="item.value" class="typeItem"
+					:class="{isActive:item.value===currentType}" @click="handleTypeClick(item)">
+					{{item.label}}
+				</view>
+			</view>
 
-		<view v-else-if="list.length" class="list">
-			<view class="item" :key="item.url" v-for="item in list">
-				<radio v-if="isEdit" class="radio" :checked="selected.includes(item.id)"
-					@click="handleSelect(item.id)" />
-				<image class="img" :src="item.url" />
+			<view class="right">
+				<view class="imageItem" v-for="item in list" :key="item.url">
+					<image class="image" :src="item.url" />
+
+					<view class="info">
+						<view class="title">
+							图片标题
+						</view>
+
+						<button type="primary" size="mini">
+							选这张
+						</button>
+					</view>
+				</view>
 			</view>
 		</view>
-		<kevy-empty v-else :show="true" type="list" text="无数据" class="list-empty"></kevy-empty>
 	</view>
 </template>
+
 <script setup>
 	import {
 		onMounted,
-		ref,
-		watch,
-		computed
+		ref
 	} from 'vue';
 	import * as galleryApi from '@/api/gallery.js';
-	import * as uploadApi from '@/api/upload.js'
+	import galleryType from '@/utils/galleryType';
 
 	const list = ref([])
 
-	const selected = ref([])
+	const q = ref('')
 
-	const isEdit = ref(false)
+	const currentType = ref('plant')
 
-	const isCheckedAll = ref(false)
-
-	const loading = ref(false)
-
-	const type = ref('plant')
-
-	const typeLabel = computed(() => typeConfig.find(item => item.value === type.value)?.label)
-
-	const typeConfig = [{
-			value: 'plant',
-			label: '植物',
-		},
-		{
-			value: 'animal',
-			label: '动物',
-		},
-		{
-			value: 'build',
-			label: '建筑',
-		},
-		{
-			value: 'food',
-			label: '美食',
-		},
-		{
-			value: 'fruit',
-			label: '水果',
-		}
-	]
 	const fetchList = async () => {
-		loading.value = true
 		const {
 			statusCode,
 			data
-		} = await galleryApi.list({
-			type: type.value
-		})
+		} = await galleryApi.list()
+
 		list.value = data
-		loading.value = false
 	}
-	const upload = () => {
-		uni.chooseImage({
-			success: async (chooseImageRes) => {
-				const files = chooseImageRes.tempFiles.map(file => ({
-					name: 'file',
-					file,
-					uri: file.path
-				}));
-				await uploadApi.gallery(files, {
-					type: type.value
-				})
-				fetchList()
-			}
+
+	const handleTypeClick = (item) => {
+		currentType.value = item.value
+	}
+	
+	const goUpload=()=>{
+		uni.navigateTo({
+			url:'/pages/tabBar/User/Gallery/Upload'
 		})
-	}
-
-	const handleSelect = (id) => {
-		if (selected.value.includes(id)) {
-			selected.value = selected.value.filter(item => item !== id)
-		} else {
-			selected.value.push(id)
-		}
-	}
-
-	const handleBatchDelete = async () => {
-		const {
-			statusCode
-		} = await galleryApi.deleteGallery({
-			ids: selected.value
-		})
-
-		if (statusCode === 201) {
-			uni.showToast({
-				title: '删除成功'
-			})
-
-			isEdit.value = false
-
-			fetchList()
-		}
 	}
 
 	onMounted(fetchList)
-
-
-	watch(type, () => {
-		fetchList()
-	})
-
-	watch(isCheckedAll, (newVal) => {
-		if (newVal) {
-			selected.value = list.value.map(item => item.id)
-		} else {
-			selected.value = []
-		}
-	})
-
-	watch(isEdit, newVal => {
-		if (!newVal) {
-			isCheckedAll.value = false
-		}
-	})
 </script>
+
 <style lang="scss">
 	.Gallery {
-		padding: 10px;
-		display: flex;
-		flex-direction: column;
-		gap: 15px;
-		position: relative;
-	}
-
-	.loading {
-		width: 30px;
-		margin: 0 auto;
-		margin-top: 50px;
-	}
-
-	.action1 {
-		display: flex;
-		justify-content: space-between;
-
-		uni-button {
-			margin: 0;
-		}
-	}
-
-	.action2 {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-
-		.batchBtn {
-			display: flex;
-			gap: 10px;
-		}
-	}
-
-	.list {
 		height: 100%;
 		width: 100%;
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 10px;
+		display: flex;
+		flex-direction: column;
 
-		.item {
-			height: 150px;
-			position: relative;
-
-			.radio {
-				position: absolute;
-				left: 5px;
-				top: 5px;
-				z-index: 10;
-			}
-
-			.img {
-				width: 100%;
-				height: 100%;
-				border: 1px solid #eee;
-				border-radius: 6px;
+		.toolbar {
+			width: 100%;
+			background-color: #fff;
+			border-bottom: 1px solid #eee;
+			display: flex;
+			
+			.upload{
+				display: flex;
+				align-items: center;
+				padding-right: 10px;
 			}
 		}
+
+		.main {
+			display: flex;
+			flex: 1;
+
+			.left {
+				width: 30%;
+
+				.typeItem {
+					width: 100%;
+					line-height: 50px;
+					text-align: center;
+				}
+
+				.isActive {
+					background-color: #007aff;
+					color: #fff;
+				}
+			}
+
+			.right {
+				flex: 1;
+				padding: 10px 15px;
+				background-color: #fff;
+				display: flex;
+				flex-direction: column;
+				gap: 15px;
+
+
+				.imageItem {
+					height: 100px;
+					display: flex;
+					gap: 15px;
+
+					.image {
+						width: 150px;
+						height: 100%;
+						border: 1px solid #eee;
+						border-radius: 6px;
+					}
+
+					.info {
+						display: flex;
+						flex-direction: column;
+						justify-content: space-between;
+
+						.title {}
+					}
+				}
+			}
+		}
+
+
 	}
 </style>

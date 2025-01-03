@@ -44,9 +44,15 @@
 			}
 		},
 		{
-			"path": "pages/tabBar/User/Gallery/index",
+			"path": "pages/tabBar/User/Gallery/Index",
 			"style": {
 				"navigationBarTitleText": "图库"
+			}
+		},
+		{
+			"path": "pages/tabBar/User/Gallery/Upload",
+			"style": {
+				"navigationBarTitleText": "图库上传"
 			}
 		},
 		{
@@ -71,9 +77,17 @@
 			"path": "pages/tabBar/User/KnowAdmin/Detail",
 			"style": {
 				"navigationBarTitleText": "识图分类管理"
-				
+
+			}
+		},
+		{
+			"path": "pages/tabBar/User/KnowAdmin/GallerySelect",
+			"style": {
+				"navigationBarTitleText": "从图库选取"
+
 			}
 		}
+
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
