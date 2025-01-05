@@ -17,19 +17,24 @@
 			</view>
 
 			<view class="right">
-				<view class="imageItem" v-for="item in list" :key="item.url">
-					<image class="image" :src="item.url" />
+				<scroll-view scroll-y="true" style="height: 100%;">
+					<view class="list">
+						<view class="imageItem" v-for="item in currentList" :key="item.url">
+							<image class="image" :src="item.url" />
 
-					<view class="info">
-						<view class="title">
-							图片标题
+							<view class="info">
+								<view class="title">
+									{{item.title}}
+								</view>
+
+								<button type="primary" size="mini">
+									选这张
+								</button>
+							</view>
 						</view>
-
-						<button type="primary" size="mini">
-							选这张
-						</button>
 					</view>
-				</view>
+
+				</scroll-view>
 			</view>
 		</view>
 	</view>
@@ -37,38 +42,35 @@
 
 <script setup>
 	import {
+		computed,
 		onMounted,
 		ref
 	} from 'vue';
 	import * as galleryApi from '@/api/gallery.js';
 	import galleryType from '@/utils/galleryType';
+	import {
+		useGalleryStore
+	} from "./store"
 
-	const list = ref([])
+	const galleryStore = useGalleryStore()
 
 	const q = ref('')
 
 	const currentType = ref('plant')
 
-	const fetchList = async () => {
-		const {
-			statusCode,
-			data
-		} = await galleryApi.list()
-
-		list.value = data
-	}
+	const currentList = computed(() => galleryStore.list.filter(item => item.type === currentType.value))
 
 	const handleTypeClick = (item) => {
 		currentType.value = item.value
 	}
-	
-	const goUpload=()=>{
+
+	const goUpload = () => {
 		uni.navigateTo({
-			url:'/pages/tabBar/User/Gallery/Upload'
+			url: '/pages/tabBar/User/Gallery/Upload'
 		})
 	}
 
-	onMounted(fetchList)
+	onMounted(galleryStore.fetchTypeList)
 </script>
 
 <style lang="scss">
@@ -77,14 +79,15 @@
 		width: 100%;
 		display: flex;
 		flex-direction: column;
+		overflow: hidden;
 
 		.toolbar {
 			width: 100%;
 			background-color: #fff;
 			border-bottom: 1px solid #eee;
 			display: flex;
-			
-			.upload{
+
+			.upload {
 				display: flex;
 				align-items: center;
 				padding-right: 10px;
@@ -94,6 +97,7 @@
 		.main {
 			display: flex;
 			flex: 1;
+			overflow: hidden;
 
 			.left {
 				width: 30%;
@@ -112,12 +116,16 @@
 
 			.right {
 				flex: 1;
-				padding: 10px 15px;
+				overflow: hidden;
 				background-color: #fff;
-				display: flex;
-				flex-direction: column;
-				gap: 15px;
 
+
+				.list {
+					display: flex;
+					flex-direction: column;
+					gap: 15px;
+					padding: 10px 15px;
+				}
 
 				.imageItem {
 					height: 100px;

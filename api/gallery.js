@@ -6,6 +6,14 @@ export const list = (data) => {
 	})
 }
 
+export const upload = (files, data) => {
+	return uni.uploadFile({
+		url: '/gallery/upload',
+		files,
+		formData: data,
+	})
+}
+
 export const deleteGallery = (data) => {
 	return uni.request({
 		url: '/gallery/delete',
