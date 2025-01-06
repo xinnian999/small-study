@@ -18,7 +18,7 @@
 
 			<view class="right">
 				<scroll-view scroll-y="true" style="height: 100%;">
-					<view class="list">
+					<view class="list" v-if="currentList.length">
 						<view class="imageItem" v-for="item in currentList" :key="item.url">
 							<image class="image" :src="item.url" />
 
@@ -34,6 +34,9 @@
 						</view>
 					</view>
 
+					<view class="empty" >
+						这个分类下还没有图片～～
+					</view>
 				</scroll-view>
 			</view>
 
@@ -45,20 +48,20 @@
 		<uni-popup ref="selectedPopup" style="z-index: 999;" type="bottom" border-radius="10px 10px 0 0">
 			<view class="selectedPopup">
 				<view class="topbar">
-					<button size="mini" type="primary">清空购物车</button>
+					<button size="mini" type="primary" @click="selected=[]">清空购物车</button>
 
 					<uni-icons type="closeempty" size="30" @click="selectedPopup.close"></uni-icons>
 				</view>
 				<scroll-view scroll-y="true" style="height: calc(100% - 43px);">
 					<uni-list v-if="selected.length" class="list">
-						<uni-list-item v-for="item in selected" :key="item.url" :title="item.title" :thumb="item.url"
-							thumb-size="lg" rightText="大图">
+						<uni-list-item v-for="(item,index) in selected" :key="item.url" :title="item.title"
+							:thumb="item.url" thumb-size="lg" rightText="大图">
 							<template v-slot:header>
 								<image class="image" :src="item.url" />
 							</template>
 							<template v-slot:footer>
 								<view class="verticalCenter">
-									<button size="mini">移除</button>
+									<button size="mini" @click="handleChatRemove(index)">移除</button>
 								</view>
 							</template>
 						</uni-list-item>
@@ -85,6 +88,10 @@
 	import {
 		useGalleryStore
 	} from "./store"
+	import {
+		uniq,
+		uniqBy
+	} from 'lodash';
 
 	const galleryStore = useGalleryStore()
 
@@ -96,7 +103,7 @@
 
 	const currentType = ref('plant')
 
-	const currentList = computed(() => galleryStore.list.filter(item => item.type === currentType.value))
+	const currentList = computed(() => galleryStore.list?.filter(item => item.type === currentType.value))
 
 	const handleTypeClick = (item) => {
 		currentType.value = item.value
@@ -154,15 +161,20 @@
 			const {
 				statusCode
 			} = await galleryApi.remove({
-				ids
+				ids: uniq(ids)
 			})
 			if (statusCode === 201) {
 				galleryStore.fetchList()
+				selected.value = []
 				uni.showToast({
 					title: '删除成功'
 				})
 			}
 		}
+	}
+
+	const handleChatRemove = (index) => {
+		selected.value.splice(index, 1)
 	}
 
 	onMounted(galleryStore.fetchList)
@@ -214,6 +226,10 @@
 				flex: 1;
 				overflow: hidden;
 				background-color: #fff;
+				
+				.empty{
+					padding: 20px;
+				}
 
 				.list {
 					display: flex;
@@ -267,6 +283,11 @@
 				display: flex;
 				margin-bottom: 10px;
 				justify-content: space-between;
+			}
+
+			.empty {
+				text-align: center;
+				padding: 25px;
 			}
 
 			.list {

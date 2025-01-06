@@ -3,7 +3,7 @@ import {
 } from "pinia";
 import * as galleryApi from '@/api/gallery.js';
 
-export const useGalleryStore = defineStore("ka", {
+export const useGalleryStore = defineStore("gallery", {
 	state: () => {
 		return {
 			list: []
