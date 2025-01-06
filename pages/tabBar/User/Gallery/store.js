@@ -10,7 +10,7 @@ export const useGalleryStore = defineStore("ka", {
 		};
 	},
 	actions: {
-		async fetchTypeList() {
+		async fetchList() {
 			const {
 				statusCode,
 				data

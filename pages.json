@@ -44,7 +44,7 @@
 			}
 		},
 		{
-			"path": "pages/tabBar/User/Gallery/Index",
+			"path": "pages/tabBar/User/Gallery/List",
 			"style": {
 				"navigationBarTitleText": "图库"
 			}

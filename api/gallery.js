@@ -14,7 +14,7 @@ export const upload = (files, data) => {
 	})
 }
 
-export const deleteGallery = (data) => {
+export const remove = (data) => {
 	return uni.request({
 		url: '/gallery/delete',
 		method: 'POST',

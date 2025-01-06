@@ -86,7 +86,7 @@
 			title: '添加成功'
 		})
 		
-		galleryStore.fetchTypeList()
+		galleryStore.fetchList()
 		
 		uni.navigateBack()
 	}

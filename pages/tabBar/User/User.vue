@@ -57,7 +57,7 @@
 					icon: "/static/tuku.png",
 					onClick: () => {
 						uni.navigateTo({
-							url: 'Gallery/Index1'
+							url: 'Gallery/List'
 						})
 					}
 				},
