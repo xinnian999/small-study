@@ -14,9 +14,25 @@ export const upload = (files, data) => {
 	})
 }
 
+export const rename = (data) => {
+	return uni.request({
+		url: '/gallery/rename',
+		method: 'POST',
+		data
+	})
+}
+
 export const remove = (data) => {
 	return uni.request({
 		url: '/gallery/delete',
+		method: 'POST',
+		data
+	})
+}
+
+export const addKnowByGallery = (data) => {
+	return uni.request({
+		url: '/know/addByGallery',
 		method: 'POST',
 		data
 	})

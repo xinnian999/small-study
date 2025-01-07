@@ -79,13 +79,6 @@
 				"navigationBarTitleText": "识图分类管理"
 
 			}
-		},
-		{
-			"path": "pages/tabBar/User/KnowAdmin/GallerySelect",
-			"style": {
-				"navigationBarTitleText": "从图库选取"
-
-			}
 		}
 
 	],

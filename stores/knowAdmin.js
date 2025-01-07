@@ -1,13 +1,14 @@
 import {
 	defineStore
 } from "pinia";
-import * as knowTypeApi from '@/api/knowType.js'
+import * as knowAdminApi from '@/api/knowAdmin.js'
 
 export const useKaStore = defineStore("ka", {
 	state: () => {
 		return {
 			typeList: [],
-			currentType: null
+			currentType: null,
+			imageList: []
 		};
 	},
 	actions: {
@@ -15,7 +16,7 @@ export const useKaStore = defineStore("ka", {
 			const {
 				statusCode,
 				data
-			} = await knowTypeApi.list()
+			} = await knowAdminApi.list()
 
 			if (statusCode === 200) {
 				this.typeList = data
@@ -28,12 +29,24 @@ export const useKaStore = defineStore("ka", {
 			const {
 				statusCode,
 				data
-			} = await knowTypeApi.detail(this.currentType.id)
+			} = await knowAdminApi.detail(this.currentType.id)
 
 			if (statusCode === 200) {
 				this.currentType = data
 			}
-		}
+		},
+		async fetchImageList() {
+			const {
+				statusCode,
+				data
+			} = await knowAdminApi.imageList({
+				typeId: this.currentType.id
+			})
+
+			if (statusCode === 200) {
+				this.imageList = data
+			}
+		},
 	},
 	unistorage: true
 });

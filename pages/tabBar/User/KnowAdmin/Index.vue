@@ -25,11 +25,11 @@
 		reactive,
 		ref
 	} from 'vue';
-	import * as knowTypeApi from '@/api/knowType.js'
+	import * as knowAdminApi from '@/api/knowAdmin.js'
 	import iconPath from '@/utils/iconPath';
 	import {
 		useKaStore
-	} from './store';
+	} from '@/stores/knowAdmin';
 
 
 	const kaStore = useKaStore()

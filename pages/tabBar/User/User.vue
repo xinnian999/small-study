@@ -30,6 +30,10 @@
 	import {
 		useGlobalStore
 	} from '@/stores/global';
+	import {
+		useGalleryStore
+	} from '@/stores/gallery';
+	const galleryStore = useGalleryStore()
 
 	const globalStore = useGlobalStore()
 
@@ -56,6 +60,7 @@
 					title: '图库',
 					icon: "/static/tuku.png",
 					onClick: () => {
+						galleryStore.setReadonly(false)
 						uni.navigateTo({
 							url: 'Gallery/List'
 						})
@@ -86,8 +91,8 @@
 			}]
 		}
 	]
-	
-	
+
+
 	globalStore.updateUserInfo()
 </script>
 

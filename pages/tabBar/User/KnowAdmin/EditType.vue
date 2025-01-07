@@ -27,10 +27,10 @@
 		ref
 	} from 'vue';
 	import IconSelect from '@/components/IconSelect.vue'
-	import * as knowTypeApi from '@/api/knowType.js'
+	import * as knowAdminApi from '@/api/knowAdmin.js'
 	import {
 		useKaStore
-	} from "./store"
+	} from '@/stores/knowAdmin';
 
 	const kaStore = useKaStore()
 
@@ -59,7 +59,7 @@
 
 		const {
 			statusCode
-		} = await knowTypeApi.update(values)
+		} = await knowAdminApi.update(values)
 
 		if (statusCode === 200) {
 			uni.showToast({
@@ -83,7 +83,7 @@
 
 		const {
 			statusCode
-		} = await knowTypeApi.deleteType(values.id)
+		} = await knowAdminApi.remove(values.id)
 
 		if (statusCode === 200) {
 			uni.showToast({

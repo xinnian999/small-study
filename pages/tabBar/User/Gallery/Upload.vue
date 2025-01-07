@@ -9,7 +9,7 @@
 				<uni-easyinput v-model="values.title" placeholder="请输入图片标题" />
 			</uni-forms-item>
 			<uni-forms-item name="images" label="选择图片">
-				<uni-file-picker v-model="values.images" limit="20" title="最多选择20张图片"
+				<uni-file-picker v-model="values.images" :limit="100" title="最多选择100张图片"
 					@select="onSelect"></uni-file-picker>
 			</uni-forms-item>
 		</uni-forms>
@@ -30,8 +30,8 @@
 	} from 'lodash'
 	import {
 		useGalleryStore
-	} from "./store"
-	
+	} from "@/stores/gallery.js"
+
 	const galleryStore = useGalleryStore()
 
 	const form = ref()
@@ -85,16 +85,16 @@
 		uni.showToast({
 			title: '添加成功'
 		})
-		
+
 		galleryStore.fetchList()
-		
+
 		uni.navigateBack()
 	}
 
 	const onSelect = ({
 		tempFiles
 	}) => {
-		values.images = tempFiles
+		values.images = [...values.images, ...tempFiles]
 	}
 </script>
 
@@ -103,6 +103,7 @@
 		padding: 20px;
 		background-color: #fff;
 		height: 100%;
+		overflow: auto;
 
 		.form {
 			padding: 10px 0;

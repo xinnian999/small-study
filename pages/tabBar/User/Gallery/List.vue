@@ -3,7 +3,7 @@
 		<view class="toolbar">
 			<uni-search-bar style="flex: 1;" :focus="true" v-model="q" cancelButton="none" />
 
-			<view class="upload">
+			<view class="upload" v-if="!readonly">
 				<button type="primary" size="mini" @click="goUpload">上传</button>
 			</view>
 		</view>
@@ -20,7 +20,7 @@
 				<scroll-view scroll-y="true" style="height: 100%;">
 					<view class="list" v-if="currentList.length">
 						<view class="imageItem" v-for="item in currentList" :key="item.url">
-							<image class="image" :src="item.url" />
+							<image class="image" :src="item.url" @click="hanlePreview(item.url)" />
 
 							<view class="info">
 								<view class="title">
@@ -34,7 +34,7 @@
 						</view>
 					</view>
 
-					<view class="empty" >
+					<view class="empty" v-else>
 						这个分类下还没有图片～～
 					</view>
 				</scroll-view>
@@ -81,19 +81,30 @@
 		computed,
 		onMounted,
 		ref,
+		toRefs,
 		watchEffect
 	} from 'vue';
 	import * as galleryApi from '@/api/gallery.js';
 	import galleryType from '@/utils/galleryType';
 	import {
 		useGalleryStore
-	} from "./store"
+	} from "@/stores/gallery.js"
+	import {
+		useKaStore
+	} from "@/stores/knowAdmin.js"
 	import {
 		uniq,
 		uniqBy
 	} from 'lodash';
 
 	const galleryStore = useGalleryStore()
+
+	const kaStore = useKaStore()
+
+	const {
+		list,
+		readonly
+	} = toRefs(galleryStore)
 
 	const q = ref('')
 
@@ -129,17 +140,26 @@
 		info: selected.value.length
 	}])
 
-	const buttonGroup = [{
-			text: '批量改名',
-			backgroundColor: '#ffa200',
-			color: '#fff'
-		},
-		{
-			text: '批量删除',
-			backgroundColor: '#ff0000',
-			color: '#fff'
+	const buttonGroup = computed(() => {
+		if (readonly.value) {
+			return [{
+				text: '选好了 ✅',
+				backgroundColor: '#ffa200',
+				color: '#fff'
+			}]
 		}
-	]
+		return [{
+				text: '批量改名',
+				backgroundColor: '#ffa200',
+				color: '#fff'
+			},
+			{
+				text: '批量删除',
+				backgroundColor: '#ff0000',
+				color: '#fff'
+			}
+		]
+	})
 
 	const footLeftClick = (e) => {
 		if (e.index === 0) {
@@ -148,6 +168,27 @@
 	}
 
 	const footRightClick = async (e) => {
+		if (readonly.value) {
+
+			const {
+				statusCode
+			} = await galleryApi.addKnowByGallery({
+				typeId: kaStore.currentType.id,
+				images: selected.value
+			})
+
+			if (statusCode === 201) {
+				uni.navigateBack()
+
+				kaStore.fetchImageList()
+
+				galleryStore.setReadonly(false)
+			}
+
+
+			return
+		}
+
 		if (e.index === 1) {
 			const {
 				confirm
@@ -171,10 +212,44 @@
 				})
 			}
 		}
+
+		if (e.index === 0) {
+			const {
+				confirm,
+				content
+			} = await uni.showModal({
+				title: '批量改名',
+				editable: true,
+				placeholderText: '请输入新的图片名称'
+			})
+
+			if (!confirm) return
+
+			const ids = selected.value.map(item => item.id)
+			const {
+				statusCode
+			} = await galleryApi.rename({
+				ids: uniq(ids),
+				title: content
+			})
+			if (statusCode === 201) {
+				galleryStore.fetchList()
+				selected.value = []
+				uni.showToast({
+					title: '批量改名成功'
+				})
+			}
+		}
 	}
 
 	const handleChatRemove = (index) => {
 		selected.value.splice(index, 1)
+	}
+
+	const hanlePreview = (url) => {
+		uni.previewImage({
+			urls:[url]
+		}) 
 	}
 
 	onMounted(galleryStore.fetchList)
@@ -226,8 +301,8 @@
 				flex: 1;
 				overflow: hidden;
 				background-color: #fff;
-				
-				.empty{
+
+				.empty {
 					padding: 20px;
 				}
 

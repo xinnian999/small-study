@@ -22,15 +22,15 @@
 		ref
 	} from 'vue';
 	import IconSelect from '@/components/IconSelect.vue'
-	import * as knowTypeApi from '@/api/knowType.js'
+	import * as knowAdminApi from '@/api/knowAdmin.js'
 	import {
 		useKaStore
-	} from "./store"
+	} from '@/stores/knowAdmin';
 
 	const kaStore = useKaStore()
-	
+
 	const form = ref()
-	
+
 	const values = reactive({
 		name: '',
 		desc: '',
@@ -58,13 +58,13 @@
 
 		const {
 			statusCode
-		} = await knowTypeApi.add(values)
+		} = await knowAdminApi.add(values)
 
 		if (statusCode === 201) {
 			uni.showToast({
 				title: '创建成功'
 			})
-			
+
 			kaStore.fetchTypeList()
 
 			uni.navigateBack()

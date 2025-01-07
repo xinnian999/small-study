@@ -29,9 +29,17 @@ export const update = (data) => {
 	})
 }
 
-export const deleteType = (id) => {
+export const remove = (id) => {
 	return uni.request({
 		url: '/knowType/delete' + `?id=${id}`,
 		method: 'DELETE',
+	})
+}
+
+export const imageList = (data) => {
+	return uni.request({
+		url: '/know/list',
+		method: 'GET',
+		data
 	})
 }
