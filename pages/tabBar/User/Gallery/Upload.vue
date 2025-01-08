@@ -9,7 +9,7 @@
 				<uni-easyinput v-model="values.title" placeholder="请输入图片标题" />
 			</uni-forms-item>
 			<uni-forms-item name="images" label="选择图片">
-				<uni-file-picker v-model="values.images" :limit="100" title="最多选择100张图片"
+				<uni-file-picker v-model="values.images" :limit="200" title="最多选择200张图片"
 					@select="onSelect"></uni-file-picker>
 			</uni-forms-item>
 		</uni-forms>

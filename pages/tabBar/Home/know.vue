@@ -1,86 +1,76 @@
 <template>
-	<uni-section title="这是什么？" type="line">
-		<uni-card>
-			<image slot='cover' style="width: 100%;" :src="store.current.img"></image>
-			<!-- <text class="uni-body">这是一个带封面和操作栏的卡片示例，此示例展示了封面插槽和操作栏插槽的用法。</text> -->
-			<view slot="actions" class="card-actions">
-				<view class="card-actions-item" @click="store.handleYes">
-					<icon type="success" size="40" />
-				</view>
-				<view class="card-actions-item" @click="handleError">
-					<icon type="clear" size="40" />
-				</view>
-			</view>
-		</uni-card>
-	</uni-section>
-	<view class="infoBar" v-if="store.current.yes||store.current.no">
-		<view class="label">已刷次数：</view> {{store.total}}
-	</view>
-	<view class="infoBar" v-if="store.current.yes||store.current.no">
-		<view class="label">正确率：</view> {{store.accuracy}}
+	<view class="topbar">
+		<view>
+			请选择一个分类进入
+		</view>
+
 	</view>
 
-	<uni-pagination v-model="store.index" :current="store.index" class="pagination" :total="store.dataSource.length"
-		page-size="1" prev-text="上一个" next-text="下一个" />
+	<view class="KnowAdmin-menus">
+		<uni-list v-if="list.length">
+			<uni-list-item v-for="item in list" :key="item.name" :title="item.name" :note="item.desc" showArrow
+				:thumb="iconPath(item.icon)" thumb-size="base" rightText="1" clickable @click="goDetail(item)" />
+		</uni-list>
 
-	<uni-popup ref="popup" type="message">
-		<uni-popup-message type="error" message="已加入错题集" :duration="2000"></uni-popup-message>
-	</uni-popup>
+		<kevy-empty v-else :show="true" type="list" text="你还没有配置过识图分类"></kevy-empty>
+	</view>
+
 </template>
 
 <script setup>
 	import {
-		computed,
+		onMounted,
+		reactive,
 		ref
 	} from 'vue';
-	import {
-		useKnowStore
-	} from '@/stores/know.js'
+	import * as knowApi from '@/api/know.js'
+	import iconPath from '@/utils/iconPath';
 
-	const store = useKnowStore()
+	const list = ref([])
 
-	const popup = ref()
 
-	const handleError = () => {
-		store.handleNo()
-		popup.value.open()
+	const goDetail = (data) => {
+		uni.navigateTo({
+			url: `/pages/tabBar/Home/knowDetail?typeId=${data.id}`
+		})
 	}
+
+	onMounted(async () => {
+		const {
+			statusCode,
+			data
+		} = await knowApi.typeList()
+
+		if (statusCode === 200) {
+			list.value = data
+		}
+	})
 </script>
 
-<style lang="scss" scoped>
-	.card-actions {
-		display: flex;
-
-		uni-icon {
-			display: flex;
-			align-items: center;
-		}
-
-		flex-direction: row;
-		justify-content: space-around;
-		align-items: center;
-		height: 45px;
-	}
-
-	.card-actions-item {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-	}
-
-
-	.infoBar {
-
-		.label {
-			width: 50%;
-			text-align: right;
-			display: inline-block;
-		}
-	}
-
-
-
-	.pagination {
+<style lang="scss">
+	.topbar {
 		padding: 20px;
+		padding-bottom: 0;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		button {
+			margin: 0;
+		}
+	}
+
+	.KnowAdmin-menus {
+		padding: 20px;
+
+
+		.uni-list {
+			gap: 20px;
+			background-color: transparent;
+		}
+
+		.uni-list-item {
+			border-radius: 5px;
+		}
 	}
 </style>

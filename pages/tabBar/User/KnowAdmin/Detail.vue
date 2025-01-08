@@ -16,7 +16,20 @@
 
 		<view v-if="kaStore.imageList.length">
 			<uni-card v-for="item in kaStore.imageList" :cover="item.url" :key="item.url">
-
+				<view class="info">
+					<view>
+						学习次数：{{item.count}}
+					</view>
+					<view>
+						正确：{{item.correct}}
+					</view>
+					<view>
+						错误：{{item.error}}
+					</view>
+					<view>
+						正确率：{{item.correctRate * 100}} %
+					</view>
+				</view>
 				<view slot="actions" class="card-actions">
 
 					<button size="mini" @click="handleDelete(item)">重置数据</button>
@@ -93,9 +106,9 @@
 			statusCode
 		} = await knowApi.remove(item.id)
 
-		if(statusCode===200){
+		if (statusCode === 200) {
 			uni.showToast({
-				title:'删除成功'
+				title: '删除成功'
 			})
 			kaStore.fetchImageList()
 		}

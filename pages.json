@@ -17,12 +17,13 @@
 		}, {
 			"path": "pages/tabBar/Home/know",
 			"style": {
-				"navigationBarTitleText": "识图"
+				"navigationBarTitleText": "识图启蒙"
 			}
-		}, {
-			"path": "pages/tabBar/Home/know-errors",
+		}, 
+		{
+			"path": "pages/tabBar/Home/knowDetail",
 			"style": {
-				"navigationBarTitleText": "识图错题集"
+				"navigationBarTitleText": "识图"
 			}
 		},
 		{

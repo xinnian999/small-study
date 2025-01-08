@@ -17,10 +17,10 @@
 			</view>
 
 			<view class="right">
-				<scroll-view scroll-y="true" style="height: 100%;">
+				<scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMore" :key="currentType">
 					<view class="list" v-if="currentList.length">
 						<view class="imageItem" v-for="item in currentList" :key="item.url">
-							<image class="image" :src="item.url" @click="hanlePreview(item.url)" />
+							<image class="image" :src="item.url" lazy-load @click="hanlePreview(item.url)" />
 
 							<view class="info">
 								<view class="title">
@@ -112,11 +112,21 @@
 
 	const selected = ref([])
 
-	const currentType = ref('plant')
+	const page = ref(1)
 
-	const currentList = computed(() => galleryStore.list?.filter(item => item.type === currentType.value))
+	const currentType = ref('animal')
+
+	const currentList = computed(() => {
+		const source = galleryStore.list?.filter(item => item.type === currentType.value)
+
+		const r = source.slice(0, page.value * 15)
+
+		return r
+	})
+
 
 	const handleTypeClick = (item) => {
+		page.value = 1
 		currentType.value = item.value
 	}
 
@@ -248,8 +258,12 @@
 
 	const hanlePreview = (url) => {
 		uni.previewImage({
-			urls:[url]
-		}) 
+			urls: [url]
+		})
+	}
+
+	const loadMore = () => {
+		page.value++
 	}
 
 	onMounted(galleryStore.fetchList)

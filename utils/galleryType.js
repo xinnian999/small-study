@@ -1,14 +1,7 @@
-export default [{
-		value: 'plant',
-		label: '植物',
-	},
+export default [
 	{
 		value: 'animal',
 		label: '动物',
-	},
-	{
-		value: 'build',
-		label: '建筑',
 	},
 	{
 		value: 'food',
@@ -17,5 +10,9 @@ export default [{
 	{
 		value: 'fruit',
 		label: '水果',
-	}
+	},
+	{
+		value: 'utils',
+		label: '工具',
+	},
 ]
