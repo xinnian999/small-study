@@ -21,8 +21,8 @@ export function createApp() {
 	};
 }
 
-const baseURL = 'http://8.141.86.20:3000'
-// const baseURL = 'http://172.20.72.37:3000'
+// const baseURL = 'http://8.141.86.20:3000'
+const baseURL = 'http://172.20.72.37:3000'
 // const baseURL = 'http://localhost:3000'
 
 const interceptorOptions = {
@@ -57,13 +57,21 @@ const interceptorOptions = {
 			message
 		} = res.data
 
+		if (res.statusCode === 500) {
+			uni.showToast({
+				title: '服务器发生错误',
+				icon: 'error'
+			})
+		}
+
+
 		if (res.statusCode === 401) {
 			uni.clearStorageSync('auth_token')
 			uni.showToast({
 				title: res.data.message,
 				icon: 'error'
 			})
-			
+
 			if (message === '登录过期') {
 				uni.navigateTo({
 					url: '/pages/Login/Login'

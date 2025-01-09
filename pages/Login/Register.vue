@@ -119,7 +119,9 @@
 
 <style lang="scss">
 	.login-page {
-		padding: 0 20px;
+		padding: 20px;
+		height: 100%;
+	background-image: linear-gradient(to bottom, #00a7fe, #91cc75);
 
 		.logo {
 			text-align: center;

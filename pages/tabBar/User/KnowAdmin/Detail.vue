@@ -32,7 +32,7 @@
 				</view>
 				<view slot="actions" class="card-actions">
 
-					<button size="mini" @click="handleDelete(item)">重置数据</button>
+					<button size="mini" @click="handleReset(item)">重置数据</button>
 					<button size="mini" type="warn" @click="handleDelete(item)">删除</button>
 
 				</view>
@@ -45,7 +45,7 @@
 
 	<uni-popup ref="popup" type="bottom" border-radius="10px 10px 0 0">
 		<view class="addImage">
-			<button type="primary">从相册上传</button>
+			<button type="primary" @click="handleUpload">从相册上传</button>
 			<button @click="goGallery">从图库选取</button>
 		</view>
 	</uni-popup>
@@ -113,6 +113,50 @@
 			kaStore.fetchImageList()
 		}
 
+	}
+
+
+	const handleReset = async (item) => {
+		const {
+			statusCode
+		} = await knowApi.reset({
+			id: item.id
+		})
+
+		if (statusCode === 200) {
+			uni.showToast({
+				title: '重置数据成功'
+			})
+			kaStore.fetchImageList()
+		}
+
+	}
+
+	const handleUpload = async () => {
+		uni.chooseImage({
+			success: async (chooseImageRes) => {
+				const files = chooseImageRes.tempFiles.map(file => ({
+					name: 'file',
+					file,
+					uri: file.path
+				}));
+
+				const {
+					statusCode
+				} = await knowApi.addKnowByAlbum(files, {
+					typeId: kaStore.currentType.id
+				})
+
+				if (statusCode === 201) {
+					uni.showToast({
+						title: '上传成功'
+					})
+
+					kaStore.fetchImageList()
+					popup.value.close()
+				}
+			}
+		})
 	}
 
 	onMounted(() => {

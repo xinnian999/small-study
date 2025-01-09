@@ -29,3 +29,12 @@ export const setUserInfo = (data) => {
 		data
 	})
 }
+
+export const setUserAvatar = (files) => {
+	// console.log(files)
+	return uni.uploadFile({
+		url: '/auth/updateUserAvatar',
+		files,
+		formData: {}
+	})
+}

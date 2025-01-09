@@ -37,7 +37,7 @@
 
 		return [{
 				label: '头像',
-				value: userInfo.avatar,
+				value: userInfo.avatar_url,
 				avatar: true,
 				showArrow: true,
 				onClick: () => {
@@ -51,7 +51,7 @@
 
 							const {
 								statusCode
-							} = await uploadApi.userAvatar(files)
+							} = await authApi.setUserAvatar(files)
 							
 							if (statusCode === 201) {
 								uni.showToast({

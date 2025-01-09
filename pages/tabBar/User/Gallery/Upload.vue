@@ -37,8 +37,8 @@
 	const form = ref()
 
 	const values = reactive({
-		type: 'plant',
-		title: '植物',
+		type: 'animal',
+		title: '动物',
 		images: []
 	})
 

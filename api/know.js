@@ -44,3 +44,22 @@ export const remove = (id) => {
 		method: 'DELETE',
 	})
 }
+
+
+export const addKnowByAlbum = (files, data) => {
+	return uni.uploadFile({
+		url: '/know/addByAlbum',
+		files,
+		formData: data
+	})
+}
+
+
+
+export const reset = (data) => {
+	return uni.request({
+		url: '/know/reset',
+		method: 'PUT',
+		data
+	})
+}

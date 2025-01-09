@@ -2,7 +2,7 @@
 	<view class="user">
 		<view class="userBar" @click="goInfo">
 			<view class="avatar">
-				<image class="img" :src="userInfo.avatar" webp />
+				<image class="img" :src="userInfo.avatar_url" webp />
 			</view>
 			<view class="names">
 				<view class="nickname">
