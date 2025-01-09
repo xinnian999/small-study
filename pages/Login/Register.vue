@@ -14,6 +14,12 @@
 			<uni-forms-item name="confimPassword">
 				<uni-easyinput v-model="values.confimPassword" type="password" placeholder="请再次输入密码" />
 			</uni-forms-item>
+
+			<uni-forms-item name="verify">
+				<button type="default" :disabled="!!values.verify"
+					@click="handleVerify">{{values.verify?'已完成验证': '点击进行人机验证'}}</button>
+				<zmm-slider-verify ref="sliderVerify" showBottomSlider @success="successHandle" />
+			</uni-forms-item>
 		</uni-forms>
 
 		<view class="actions">
@@ -41,6 +47,7 @@
 	import * as authApi from '@/api/auth.js'
 
 	const form = ref()
+	const sliderVerify = ref()
 
 	const alertDialog = ref()
 	const errorDialog = ref()
@@ -81,12 +88,19 @@
 				}
 			]
 		},
+		verify: {
+			rules: [{
+				required: true,
+				errorMessage: '请完成人机验证',
+			}]
+		},
 	}
 
 	const values = reactive({
 		username: '',
 		password: '',
-		confimPassword: ''
+		confimPassword: '',
+		verify: ''
 	})
 
 	const handleOk = async () => {
@@ -111,9 +125,18 @@
 	}
 
 	const goLogin = () => {
-		uni.navigateTo({
+		uni.navigateTo({ 
 			url: '/pages/Login/Login'
 		})
+	}
+
+	//显示验证组件
+	const handleVerify = () => {
+		sliderVerify.value.show()
+	}
+	//验证通过回调
+	const successHandle = (e) => {
+		values.verify = e
 	}
 </script>
 
@@ -121,7 +144,7 @@
 	.login-page {
 		padding: 20px;
 		height: 100%;
-	background-image: linear-gradient(to bottom, #00a7fe, #91cc75);
+		background-image: linear-gradient(to bottom, #00a7fe, #91cc75);
 
 		.logo {
 			text-align: center;
@@ -153,4 +176,6 @@
 			width: 100%;
 		}
 	}
+
+
 </style>

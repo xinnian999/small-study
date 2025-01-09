@@ -8,7 +8,7 @@
 		onHide: function() {
 			console.log('App Hide')
 		},
-		
+ 
 	}
 </script>
 
@@ -22,5 +22,10 @@
 	.verticalCenter {
 		display: flex;
 		align-items: center;
+	}
+
+	.zmm-slider-verify-slider-touch {
+		position: relative;
+		z-index: 999;
 	}
 </style>

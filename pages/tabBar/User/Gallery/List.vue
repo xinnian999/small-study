@@ -10,7 +10,7 @@
 
 		<view class="main">
 			<view class="left">
-				<view v-for="item in galleryType" :key="item.value" class="typeItem"
+				<view v-for="item in leftConfig" :key="item.value" class="typeItem"
 					:class="{isActive:item.value===currentType}" @click="handleTypeClick(item)">
 					{{item.label}}
 				</view>
@@ -35,7 +35,7 @@
 					</view>
 
 					<view class="empty" v-else>
-						这个分类下还没有图片～～
+						{{ currentType==='q'?'没有搜到相关图片哟～～':'这个分类下还没有图片～～' }}
 					</view>
 				</scroll-view>
 			</view>
@@ -99,6 +99,14 @@
 
 	const galleryStore = useGalleryStore()
 
+	const leftConfig = [
+		...galleryType,
+		{
+			value: 'q',
+			label: '搜索',
+		}
+	]
+
 	const kaStore = useKaStore()
 
 	const {
@@ -117,11 +125,13 @@
 	const currentType = ref('animal')
 
 	const currentList = computed(() => {
+		if (currentType.value === 'q' && q.value) {
+			return galleryStore.list.filter(item => item.title.includes(q.value)).slice(0, page.value * 15)
+		}
+
 		const source = galleryStore.list?.filter(item => item.type === currentType.value)
 
-		const r = source.slice(0, page.value * 15)
-
-		return r
+		return source.slice(0, page.value * 15)
 	})
 
 
